@@ -6,7 +6,6 @@ const form = document.querySelector("#new-task-form");
 const input = document.querySelector("#new-task-input");
 const list_element = document.querySelector("#tasks")
 
-localStorage.clear();
 
 form.addEventListener('submit', (e) => { 
 
@@ -157,7 +156,12 @@ form.addEventListener('submit', (e) => {
         action_elements.appendChild(action_edit);
         action_elements.appendChild(action_delete);
         task_element.appendChild(action_elements);
-
+        
+        if(objTaskLocal.is_checked==="true"){ //Mora biti i ovaj i donji jer ovaj sluzi za kad se friski objekt napravi onda mu sejva za refresh
+            console.log("jebemu plemedds");
+            action_check.checked=true;
+            task_input_element.classList.add("checked");
+        }
         
         action_edit.addEventListener('click', () => {
             //console.log("2");
