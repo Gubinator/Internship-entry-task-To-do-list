@@ -6,6 +6,7 @@ const form = document.querySelector("#new-task-form");
 const input = document.querySelector("#new-task-input");
 const list_element = document.querySelector("#tasks")
 
+localStorage.clear();
 
 form.addEventListener('submit', (e) => { 
 
@@ -133,13 +134,9 @@ form.addEventListener('submit', (e) => {
         /*objTaskLocal.description = task_input_element.value;
         taskObject.is_checked = action_check.checked;
         console.log(taskObject);*/
-        
+        console.log("hehehxd")
+        console.log(objTaskLocal.is_checked)
         task_input_element.value = objTaskLocal.description; // I'm using objects attribute description to change input field for updated page
-        if(objTaskLocal.is_checked===true){
-            action_check.checked=true;
-            task_input_element.classList.add("checked");
-        }
-
         task_input_element.setAttribute("readonly", "readonly");
 
         
@@ -160,9 +157,10 @@ form.addEventListener('submit', (e) => {
         action_elements.appendChild(action_edit);
         action_elements.appendChild(action_delete);
         task_element.appendChild(action_elements);
+
         
         action_edit.addEventListener('click', () => {
-            console.log("2");
+            //console.log("2");
             console.log(objTaskLocal.description);
             if(action_edit.innerText.toLowerCase() == "edit"){
                 action_edit.innerText = "save";
@@ -188,25 +186,28 @@ form.addEventListener('submit', (e) => {
         
         action_check.addEventListener('change', () =>{
             
-            if(objTaskLocal.is_checked===true){
-                //action_check.checked = "true";
-                //localStorage.setItem(objTaskLocal.description, JSON.stringify(objTaskLocal));
-
+            if(action_check.checked===true){
+                //console.log("1ST TEST");
+                objTaskLocal.is_checked = true;
                 task_input_element.classList.add("checked");
-                objTaskLocal.is_checked = "true";
                 localStorage.setItem(task_input_element.value, JSON.stringify(objTaskLocal));
                 
             }
-            if(objTaskLocal.is_checked===false){
-               // action_check.checked = "false";
-                //localStorage.setItem(objTaskLocal.description, JSON.stringify(objTaskLocal));
+            if(action_check.checked===false){
+                //console.log("2ND TEST");
+                objTaskLocal.is_checked = false;
 
                 task_input_element.classList.remove("checked");
-                objTaskLocal.is_checked = "false";
                 localStorage.setItem(task_input_element.value, JSON.stringify(objTaskLocal));
             }
 
          })
+
+         if(objTaskLocal.is_checked===true){
+            console.log("jebemu pleme");
+            action_check.checked=true;
+            task_input_element.classList.add("checked");
+        }
 
         }
     }
