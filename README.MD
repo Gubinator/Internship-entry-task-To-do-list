@@ -24,11 +24,14 @@ HTML, CSS, JS
 * Multiple To-do lists
    * You can create multiple To-do lists with this application.
 
+
 * Insert, Edit, Delete
    * You can insert, edit or delete individual task by using intended buttons. 
 
+
 * To-do task can be checked as finished or unfinished
    * By clicking checkbox button you can check your task as finished or unfinished and following data will be saved. 
+
 
 * Local storage data
    * Data is saved inside a local storage for better user experience.
@@ -43,9 +46,11 @@ Business mail: dominik.gubo2@gmail.com
 
 * "Single list application almost done, need to sort task-data"
     * Added almost done HTML, CSS, JSS for application, although some changes and fixes are needed. (25/04/2022)
+   
 * "Fixed check-state of an current localy stored object"
     * Fixed a bug where CSS style was not applied on current object that is stored in local storage and on refresh. (26/04/2022)
-* "Create README.MD & Update README.MD"
+    
+* "Create README.MD"
     * Added readme file. (26/04/2022)
 
 
@@ -54,9 +59,9 @@ Business mail: dominik.gubo2@gmail.com
 ## Acknowledgments;
 
 Inspiration, things that helped me create this project, etc..
-* [Tyler Potts - main idea] (https://www.youtube.com/watch?v=MkESyVB4oUw&ab_channel=TylerPotts)
-* [dcode - how local storage funtions] (https://www.youtube.com/watch?v=k8yJCeuP6I8&ab_channel=dcode)
-* [Web Dev Simplifed - idea I guess, maybe?] (https://www.youtube.com/watch?v=W7FaYfuwu70&t=2111s&ab_channel=WebDevSimplified)
-* [W3Schools - CSS, HTML, JSS pretty much everything] (https://www.w3schools.com/)
-* [etc..] (https://www.youtube.com/watch?v=_WH6cbwZ5m8&ab_channel=Jombo)
+* Tyler Potts - main idea: (https://www.youtube.com/watch?v=MkESyVB4oUw&ab_channel=TylerPotts)
+* dcode - how local storage funtions: (https://www.youtube.com/watch?v=k8yJCeuP6I8&ab_channel=dcode)
+* Web Dev Simplifed - idea I guess, maybe?: (https://www.youtube.com/watch?v=W7FaYfuwu70&t=2111s&ab_channel=WebDevSimplified)
+* W3Schools - CSS, HTML, JSS pretty much everything: (https://www.w3schools.com/)
+* etc..: (https://www.youtube.com/watch?v=_WH6cbwZ5m8&ab_channel=Jombo)
 
