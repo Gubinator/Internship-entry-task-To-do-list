@@ -36,6 +36,7 @@ HTML, CSS, JS
 * Local storage data
    * Data is saved inside a local storage for better user experience.
 
+![Single To-do list](https://imgur.com/Mrg41xa)
 
 ### Author
 
