@@ -1,7 +1,7 @@
 # To-do list
 
-* **EN**: Simple web-application used for making To-do lists ✏️.
-* **HR**: Jednostavna web-aplikacija korištena za stvaranje To-do lista ✏️.
+* **EN**: Simple web-application used for making To-do lists ✏️📝.
+* **HR**: Jednostavna web-aplikacija korištena za stvaranje To-do lista ✏️📝.
 
 ## Description
 
