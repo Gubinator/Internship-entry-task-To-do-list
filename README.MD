@@ -52,9 +52,10 @@ Business mail: dominik.gubo2@gmail.com
     * Fixed a bug where CSS style was not applied on current object that is stored in local storage and on refresh. (26/04/2022)
     
 * "Create README.MD"
-    * Added readme file. (26/04/2022)
+    * Added readme file. (26/04/2022) Added frontend for inserting multiple task lists
 
-
+* "Added frontend for inserting multiple task lists"
+    * Added HTML, CSS and part of JS for insertion of multiple task lists. Still haven't fixed issue of sorting tasks inside a task-list. (28/04/2022)
 
 
 ## Acknowledgments;
