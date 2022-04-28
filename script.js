@@ -2,9 +2,94 @@ window.localStorage
 
 window.addEventListener('load', () => {
 
+
+//1st half (Defining list of task)
+const formList = document.querySelector("#new-todo-list");
+const inputList = document.querySelector("#new-list-input");
+const taskLists = document.querySelector("#list-selector");
+
+
+//2nd half (Defining tasks of an list)
 const form = document.querySelector("#new-task-form");
 const input = document.querySelector("#new-task-input");
-const list_element = document.querySelector("#tasks")
+
+const submit = document.querySelector(".submit-test");
+const main = document.querySelector("#main-task");
+const listTitle = document.querySelector("#list-title");
+
+const list_element = document.querySelector("#tasks") 
+
+const listNamesArr = [];
+//const taskNamesArr = []; // Nece moci ovako morati ce preko objekta kasnije za fju InvalidateSameTaskName - pricekati
+
+function RemoveHidden(){
+    if(taskLists.hasAttribute("hidden")){ // Shows Select or "taskLists" when not empty
+        taskLists.removeAttribute("hidden");
+    }
+    if(submit.hasAttribute("hidden")){ // -||-
+        submit.removeAttribute("hidden");
+    }
+    if(input.hasAttribute("hidden")){ // -||-
+        input.removeAttribute("hidden");
+    }
+    if(main.hasAttribute("hidden")){ 
+        main.removeAttribute("hidden");
+    }
+    if(listTitle.hasAttribute("hidden")){ 
+        listTitle.removeAttribute("hidden");
+    }
+}
+
+function InvalidateSameListName(listName){
+    var count = 0;
+
+    for(var i=0; i<listNamesArr.length; i++){
+        if(listName===listNamesArr[i]){
+            count++;
+            //console.log(count + "U foru");
+        }
+    }
+    //console.log(count + "Van fora");
+    if(count>=1){
+        //alert("List of the same name is already inputed. Please change the name of a list.")
+        return 1;
+    }
+
+}
+
+formList.addEventListener('submit', (e) => { 
+    e.preventDefault();
+
+    const select_element = document.createElement("option");
+    console.log(inputList.value);
+    if(!inputList.value){
+        alert("List name can't be empty, please fill up your list name before submitting!");
+    }
+    if(InvalidateSameListName(inputList.value)==1){
+        alert("List of the same name is already inputed, please change the name of a list.");
+    } 
+    else{
+        
+        
+        
+        const select_element = document.createElement("option");
+        //task_input_element.classList.add("text");
+        //task_input_element.classList.add("input-hide");
+        
+        select_element.value = inputList.value;
+        select_element.text = inputList.value;
+
+        
+        ///MEMO OVO NECE RADITI NA REFRESH NACI MEHANIZAM DA RADI PREKO LISTE
+        RemoveHidden();
+
+        taskLists.appendChild(select_element);
+        listNamesArr.push(select_element.value);
+        alert("You inserted a new task list - " + select_element.value);
+
+    }
+
+})
 
 
 form.addEventListener('submit', (e) => { 
@@ -18,9 +103,8 @@ form.addEventListener('submit', (e) => {
     task_content_element.classList.add("content");
 
     if(!input.value){
-        alert("Task can't be empty, please fill up your task before submitting!")
-        e.preventDefault();
-    } else { //Prevents blank task input
+        alert("Task can't be empty, please fill up your task before submitting!");  //Prevents blank task input
+    } else { 
 
         //task_content_element.innerText = input.value;
         /*task_element.appendChild(task_content_element);
@@ -133,7 +217,8 @@ form.addEventListener('submit', (e) => {
         /*objTaskLocal.description = task_input_element.value;
         taskObject.is_checked = action_check.checked;
         console.log(taskObject);*/
-        console.log("hehehxd")
+        
+        //console.log("CONSOLE LOG TEST")
         console.log(objTaskLocal.is_checked)
         task_input_element.value = objTaskLocal.description; // I'm using objects attribute description to change input field for updated page
         task_input_element.setAttribute("readonly", "readonly");
@@ -158,7 +243,7 @@ form.addEventListener('submit', (e) => {
         task_element.appendChild(action_elements);
         
         if(objTaskLocal.is_checked==="true"){ //Mora biti i ovaj i donji jer ovaj sluzi za kad se friski objekt napravi onda mu sejva za refresh
-            console.log("jebemu plemedds");
+            //console.log("If checked - on refresh console log this);
             action_check.checked=true;
             task_input_element.classList.add("checked");
         }

@@ -12,14 +12,33 @@
 <body>
 
     <header>
-        <h1>To-do list</h1>
+        <h1>Manage To-do list</h1>
+        <form id="new-todo-list">
+
+            <div class="new-task-list" >
+                <input type="text" id="new-list-input" class="input-hide" placeholder="Write down your list name">
+                <input type="submit" class="input-hide" id="new-task-submit" value="+">
+                <form action="#" >
+                    <select name="languages" hidden class="selector" id="list-selector" placeholder="Your">
+                      <!-- <option value="List2">L1</option>
+                      <option value="List1">L2</option> -->
+                    </select>
+              </form>
+            </div>
+
+ 
+        </form>
+
+        
+
+        <h1 hidden id="list-title">To-do list</h1>
         <form id="new-task-form">
-            <input type="text" id="new-task-input" class="input-hide" placeholder="Write down your task here">
-            <input type="submit" class="input-hide" id="new-task-submit" value="+">
+            <input hidden type="text" id="new-task-input" class="input-hide" placeholder="Write down your task here">
+            <input hidden type="submit" id="new-task-submit" class="input-hide submit-test" value="+">
         </form>
     </header>
 
-<main>
+<main id="main-task" hidden>
     <section class="task-list">
         <h2>Tasks</h2>
 
