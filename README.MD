@@ -57,6 +57,9 @@ Business mail: dominik.gubo2@gmail.com
 * "Added frontend for inserting multiple task lists"
     * Added HTML, CSS and part of JS for insertion of multiple task lists. Still haven't fixed issue of sorting tasks inside a task-list. (28/04/2022)
 
+* "Added list-selector functions, InvalidateSameTaskName function..."
+    * Fixed some minor bugs. Added few list-selector functions, function for preventing same task name input, function for sorting, etc. Need to adapt and implement function for sorting, connect tasks with their individual tasks, sort tasks. (29/04/2022)  
+
 
 ## Acknowledgments;
 
