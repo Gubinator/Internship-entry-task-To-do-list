@@ -2,14 +2,26 @@ window.localStorage
 
 window.addEventListener('load', () => {
 
+/*
+    // Sintaksa koju cu koristiti za POVEZIVANJE
+var ary = [{name: "yyyy", id: "qqqq"}, {name: "xyxyxyx", id: "mqweqwer"}, {jabuka: "crvena", hotel: "trivago"}, {value: "sqwej"}];
+console.log(JSON.stringify(ary));
+var nesto = Array.from(ary);
+console.log(nesto);
+console.log(nesto);
+console.log(nesto[0]);
+console.log(nesto[0].name);
+console.log(nesto[2].hotel);
+if(nesto[3].value==nesto[1].name){console.log("Ovo funkc");}
+*/
 
-//1st half (Defining list of task)
+//1st half (Defining list of tasks)
 const formList = document.querySelector("#new-todo-list");
 const inputList = document.querySelector("#new-list-input");
 const taskLists = document.querySelector("#list-selector");
+const title = document.querySelector("#tasklist-name");
 
-
-//2nd half (Defining tasks of an list)
+//2nd half (Defining tasks of an individual list)
 const form = document.querySelector("#new-task-form");
 const input = document.querySelector("#new-task-input");
 
@@ -20,6 +32,10 @@ const listTitle = document.querySelector("#list-title");
 const list_element = document.querySelector("#tasks") 
 
 const listNamesArr = [];
+const taskNamesArr = [];
+const informationObject = new Object();
+
+
 //const taskNamesArr = []; // Nece moci ovako morati ce preko objekta kasnije za fju InvalidateSameTaskName - pricekati
 
 function RemoveHidden(){
@@ -57,6 +73,45 @@ function InvalidateSameListName(listName){
 
 }
 
+
+function InvalidateSameTaskName(taskName){
+    var count = 0;
+
+    for(var i=0; i<taskNamesArr.length; i++){
+        if(taskName===taskNamesArr[i]){
+            count++;
+        }
+    }
+    if(count>=1){
+        return 1;
+    }
+
+}
+
+
+
+// TEST for using a function to sort localStorage tasks by id (date.time)
+//var arr = new Array(5,3,6,7,2,1,8,9);
+//console.log(arr);
+/*function SortByLastDate(array){
+    
+    var count = 0; 
+    for(var i=0; i<array.length; i++){
+        var min = array[i];
+        for(var j=i+1; j<array.length; j++){
+            if(min>array[j]){
+                var store = array[j];
+                [array[j], min] = [min, array[j]];
+                [array[i], store] = [store, array[i]];
+            }
+        }
+        }
+    }*/
+//SortByLastDate(arr);
+//console.log(arr);
+
+
+
 formList.addEventListener('submit', (e) => { 
     e.preventDefault();
 
@@ -64,13 +119,12 @@ formList.addEventListener('submit', (e) => {
     console.log(inputList.value);
     if(!inputList.value){
         alert("List name can't be empty, please fill up your list name before submitting!");
+        return;
     }
     if(InvalidateSameListName(inputList.value)==1){
-        alert("List of the same name is already inputed, please change the name of a list.");
+        alert("List of the same name is already inserted, please change the name of a list.");
     } 
     else{
-        
-        
         
         const select_element = document.createElement("option");
         //task_input_element.classList.add("text");
@@ -78,6 +132,8 @@ formList.addEventListener('submit', (e) => {
         
         select_element.value = inputList.value;
         select_element.text = inputList.value;
+        title.textContent = select_element.value;
+        title.value = select_element.value;
 
         
         ///MEMO OVO NECE RADITI NA REFRESH NACI MEHANIZAM DA RADI PREKO LISTE
@@ -85,10 +141,16 @@ formList.addEventListener('submit', (e) => {
 
         taskLists.appendChild(select_element);
         listNamesArr.push(select_element.value);
-        alert("You inserted a new task list - " + select_element.value);
+        alert("You inserted a new task list: " + select_element.value);
+        taskLists.value=select_element.value; 
 
     }
 
+})
+
+//Okej ovo funkcionira no treba dodati i to da kada se odabere lista da se i njeni TASKOVI prikazu a ovi sakriju
+taskLists.addEventListener('change', (e) => {
+    title.textContent = taskLists.value;
 })
 
 
@@ -104,7 +166,12 @@ form.addEventListener('submit', (e) => {
 
     if(!input.value){
         alert("Task can't be empty, please fill up your task before submitting!");  //Prevents blank task input
-    } else { 
+        return;
+    } 
+    if(InvalidateSameTaskName(input.value)){
+        alert("Task of the same name is already inserted, please change the name of a task.");
+    }
+    else { 
 
         //task_content_element.innerText = input.value;
         /*task_element.appendChild(task_content_element);
@@ -137,9 +204,12 @@ form.addEventListener('submit', (e) => {
         action_elements.appendChild(action_delete);
         task_element.appendChild(action_elements);
 
+
+
         input.value="";
         
         
+
 
         action_delete.addEventListener('click', () => { 
         list_element.removeChild(task_element);
@@ -153,12 +223,29 @@ form.addEventListener('submit', (e) => {
         const taskObject = new Object();
         taskObject.description = task_input_element.value;
         taskObject.is_checked = action_check.checked;
-        console.log(taskObject);
-        console.log(JSON.stringify(taskObject));
+        
+        //Making ID by using date 
+        var date = new Date();
+        var dateTime = date.getTime();
+        taskObject.id = dateTime; 
+        taskObject.BelongsTo = taskLists.value;
+        
+        //console.log(taskObject); //JUST TO CHECK
+        //console.log(JSON.stringify(taskObject));
+        
         // I'm using value as input field value as
+        
+        taskNamesArr.push(task_input_element.value);
+
+        informationObject.lists = listNamesArr;
+        informationObject.Task = taskObject;
+        console.log(informationObject); /// Radi objekt treba umjesto taskObjecta ga ubaciti i implementirati za sve
+
         localStorage.setItem(taskObject.description, JSON.stringify(taskObject));
         
-
+        
+        
+        
         action_edit.addEventListener('click', () => {
             
             if(action_edit.innerText.toLowerCase() == "edit"){
@@ -197,7 +284,7 @@ form.addEventListener('submit', (e) => {
     //Dio za prikaz itema koji su stavljeni unutar local storage-a, ugl. for petlja i copy-pasteane f-je
     if(localStorage.length!=0){
         for (let i=0; i<localStorage.length; i++){
-
+        
         const task_element = document.createElement("div");
         task_element.classList.add("task");
         
@@ -212,14 +299,19 @@ form.addEventListener('submit', (e) => {
         const key = localStorage.key(i);
         const value = localStorage.getItem(key);
 
-        const objTaskLocal = JSON.parse(value); //Here I established object from whom I can get value of both checkbox and task-name
 
+        const objTaskLocal = JSON.parse(value); //Here I established object from whom I can get value of both checkbox and task-name
+        
+        
+        
+        //console.log(objTaskLocal);
         /*objTaskLocal.description = task_input_element.value;
         taskObject.is_checked = action_check.checked;
         console.log(taskObject);*/
         
         //console.log("CONSOLE LOG TEST")
         console.log(objTaskLocal.is_checked)
+        console.log(objTaskLocal.id)
         task_input_element.value = objTaskLocal.description; // I'm using objects attribute description to change input field for updated page
         task_input_element.setAttribute("readonly", "readonly");
 
@@ -293,7 +385,7 @@ form.addEventListener('submit', (e) => {
          })
 
          if(objTaskLocal.is_checked===true){
-            console.log("jebemu pleme");
+            console.log("Checked on refresh" + objTaskLocal.id);
             action_check.checked=true;
             task_input_element.classList.add("checked");
         }
