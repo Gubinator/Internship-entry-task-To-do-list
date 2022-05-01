@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDL</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="./script.js"></script>
+
+</head>
+<body>
+
+    <header>
+        <h1>Manage To-do list</h1>
+        <form id="new-todo-list">
+
+            <div class="new-task-list" >
+                <input type="text" id="new-list-input" class="input-hide" placeholder="Write down your list name">
+                <input type="submit" class="input-hide" id="new-task-submit" value="+">
+                <form action="#" >
+                    <select name="languages" hidden class="selector" id="list-selector" placeholder="Your">
+                      <!-- <option value="List2">L1</option>
+                      <option value="List1">L2</option> -->
+                    </select>
+              </form>
+            </div>
+
+ 
+        </form>
+
+        
+
+        <h1 hidden id="list-title">To-do list</h1>
+        <form id="new-task-form">
+            <input hidden type="text" id="new-task-input" class="input-hide" placeholder="Write down your task here">
+            <input hidden type="submit" id="new-task-submit" class="input-hide submit-test" value="+">
+        </form>
+    </header>
+
+<main id="main-task" hidden>
+    <section class="task-list">
+        <h2 id="tasklist-name">Tasks</h2>
+
+          <div id="tasks">
+                <!--<div class="task">
+                    <div class="content"> 
+                        <input type="text" class="text input-hide" value="This is just a test" readonly>
+                    </div> 
+    
+                    <div class="actions"> 
+                        <input type="checkbox" class="input-checkbox">
+                        <button class="edit">Edit</button>
+                        <button class="delete">Delete</button>
+                    </div>
+                </div>  -->
+        </div>
+    </section>
+</main>
+
+</body>
+</html>
