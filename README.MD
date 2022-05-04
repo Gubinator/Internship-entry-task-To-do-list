@@ -34,9 +34,9 @@ HTML, CSS, JS
 
 
 * Local storage data
-   * Data is saved inside a local storage for better user experience.
+   * Data is saved inside a local storage for normal user experience.
 
-![Single To-do list](https://i.imgur.com/Mrg41xa.jpeg)
+![To-Do list](https://i.imgur.com/dXPExxQ.jpg)
 
 ### Author
 
@@ -62,6 +62,9 @@ Business mail: dominik.gubo2@gmail.com
     
 * "Locally saved list names"
     * Names of task-lists can now be saved to the local storage. Linked task with corresponding task-list on-load. (01/05/2022)  
+  
+* "Added sorting by insert, connected tasks to the list"
+    * Tasks are sorted by insert order. Linked task with corresponding task-list when other list is selected-changed. (04/05/2022)  
 
 
 ## Acknowledgments;
