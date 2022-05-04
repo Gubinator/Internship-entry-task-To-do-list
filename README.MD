@@ -26,7 +26,7 @@ HTML, CSS, JS
 
 
 * Insert, Edit, Delete
-   * You can insert, edit or delete individual task by using intended buttons. 
+   * You can insert, edit, or delete individual tasks by using the intended buttons.
 
 
 * To-do task can be checked as finished or unfinished
