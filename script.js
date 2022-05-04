@@ -320,7 +320,7 @@ form.addEventListener('submit', (e) => {
             else{
                 action_edit.innerText = "edit";
                 task_input_element.setAttribute("readonly", "readonly");
-                taskObject.description = task_input_element.value;
+                informationObject.description = task_input_element.value;
                 localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
             }
         })

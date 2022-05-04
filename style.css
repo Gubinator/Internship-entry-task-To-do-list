@@ -18,6 +18,7 @@ body {
     min-height: 100vh;
     background-image: linear-gradient(120deg, rgb(139, 100, 100), rgb(197, 40, 40));
     color: white;
+    min-width: 740px;
 }
 
 header {
@@ -108,6 +109,10 @@ button {
     opacity: 0.2;
 }
 
+#new-task-list{
+    flex: 1 1 0%;
+}
+
 main{
     flex: 1 1 0%;
     padding: 1.5rem 2rem;
@@ -179,6 +184,7 @@ main{
 
 
 .selector {
+    flex: 1 1 0%;
     width: 10rem;
     max-width: 10rem;
     border-radius: 1rem;
@@ -203,6 +209,7 @@ main{
     border-radius: 1rem;
     text-align: center;
     margin-right: 0.5rem;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     /*padding: 1rem;*/
 }
@@ -222,5 +229,3 @@ main{
 .transition {
     animation: fadeIn 2s;
 }
-
-
