@@ -2,20 +2,6 @@ window.localStorage
 
 window.addEventListener('load', () => {
 
-
- /*   // Sintaksa koju cu koristiti za POVEZIVANJE
-var ary = [{name: "yyyy", id: "qqqq"}, {name: "xyxyxyx", id: "mqweqwer"}, {jabuka: "crvena", hotel: "trivago"}, {value: "sqwej"}];
-console.log(JSON.stringify(ary));
-var nesto = Array.from(ary);
-console.log(nesto);
-console.log(nesto);
-console.log(nesto[0]);
-console.log(nesto[0].name);
-console.log(nesto[2].hotel);
-if(nesto[3].value==nesto[1].name){console.log("Ovo funkc");}
-*/
-
-
 //localStorage.clear();
 
 //1st half (Defining list of tasks)
@@ -27,19 +13,14 @@ const title = document.querySelector("#tasklist-name");
 //2nd half (Defining tasks of an individual list)
 const form = document.querySelector("#new-task-form");
 const input = document.querySelector("#new-task-input");
-
 const submit = document.querySelector(".submit-test");
 const main = document.querySelector("#main-task");
 const listTitle = document.querySelector("#list-title");
-
 const list_element = document.querySelector("#tasks") 
-
 const listNamesArr = [];
 const taskNamesArr = [];
 const informationObject = new Object();
 informationObject.lists = listNamesArr;
-
-//const taskNamesArr = []; // Nece moci ovako morati ce preko objekta kasnije za fju InvalidateSameTaskName - pricekati
 
 function RemoveHidden(){
     if(taskLists.hasAttribute("hidden")){ // Shows Select or "taskLists" when not empty
@@ -65,17 +46,13 @@ function InvalidateSameListName(listName){
     for(var i=0; i<listNamesArr.length; i++){
         if(listName===listNamesArr[i]){
             count++;
-            //console.log(count + "U foru");
         }
     }
-    //console.log(count + "Van fora");
     if(count>=1){
-        //alert("List of the same name is already inputed. Please change the name of a list.")
         return 1;
     }
 
 }
-
 
 function InvalidateSameTaskName(taskName){
     var count = 0;
@@ -91,35 +68,20 @@ function InvalidateSameTaskName(taskName){
 
 }
 
-
-
-// TEST for using a function to sort localStorage tasks by id (date.time)
-//var arr = new Array(5,3,6,7,2,1,8,9);
-//console.log(arr);
-/*function SortByLastDate(array){
-    
-    var count = 0; 
-    for(var i=0; i<array.length; i++){
-        var min = array[i];
-        for(var j=i+1; j<array.length; j++){
-            if(min>array[j]){
-                var store = array[j];
-                [array[j], min] = [min, array[j]];
-                [array[i], store] = [store, array[i]];
-            }
-        }
-        }
-    }*/
-//SortByLastDate(arr);
-//console.log(arr);
-
-
+// Found on stack overflow (didn't find another way) : https://stackoverflow.com/questions/9778899/how-to-order-divs-by-id-in-javascript
+function SortTasksById(){
+    [].map.call( list_element.children, Object ).sort(function (a,b){
+        return +a.id.match(/\d+/) - +b.id.match( /\d+/ );
+    }).forEach( function (elem){
+        elem.classList.add("transition");
+        list_element.appendChild(elem);
+    });
+}
 
 formList.addEventListener('submit', (e) => { 
     e.preventDefault();
-
     const select_element = document.createElement("option");
-    console.log(inputList.value);
+    //console.log(inputList.value);
     if(!inputList.value){
         alert("List name can't be empty, please fill up your list name before submitting!");
         return;
@@ -128,18 +90,13 @@ formList.addEventListener('submit', (e) => {
         alert("List of the same name is already inserted, please change the name of a list.");
     } 
     else{
-        
+        list_element.innerHTML="";
         const select_element = document.createElement("option");
-        //task_input_element.classList.add("text");
-        //task_input_element.classList.add("input-hide");
         
         select_element.value = inputList.value;
         select_element.text = inputList.value;
         title.textContent = select_element.value;
         title.value = select_element.value;
-
-        
-        ///MEMO OVO NECE RADITI NA REFRESH NACI MEHANIZAM DA RADI PREKO LISTE
         RemoveHidden();
 
         taskLists.appendChild(select_element);
@@ -148,27 +105,31 @@ formList.addEventListener('submit', (e) => {
         alert("You inserted a new task list: " + select_element.value);
         taskLists.value=select_element.value; 
 
-    }
+        /*removeListButton.addEventListener('click', () => { 
+            list_element.removeChild(task_element);
+            localStorage.removeItem(objTaskLocal.TaskID);
+                     })*/
 
+    }
 })
 
-//Okej ovo funkcionira no treba dodati i to da kada se odabere lista da se i njeni TASKOVI prikazu a ovi sakriju
 taskLists.addEventListener('change', (e) => {
     title.textContent = taskLists.value;
 
-
     if(localStorage.length!=0){
         RemoveHidden();
+        list_element.innerHTML=""; // Everytime clears div filled with tasks, and loads new everytime on change
         for (let i=0; i<localStorage.length; i++){
         
         const key = localStorage.key(i);
         const value = localStorage.getItem(key);
-        console.log(value);
+        //console.log(value);
         const objTaskLocal = JSON.parse(value); //Here I established object from whom I can get value of both checkbox and task-name
-        console.log(objTaskLocal)
-        console.log(taskLists.value);
-        console.log("Ovo je nes drugo"+objTaskLocal.BelongsTo);
+        //console.log(objTaskLocal)
+        //console.log(taskLists.value);
+        //console.log("Ovo je nes drugo"+objTaskLocal.BelongsTo);
         if(taskLists.value==objTaskLocal.BelongsTo){
+            RemoveHidden();
             const task_element = document.createElement("div");
             task_element.classList.add("task");
             
@@ -179,27 +140,21 @@ taskLists.addEventListener('change', (e) => {
             task_input_element.type = "text";
             task_input_element.classList.add("text");
             task_input_element.classList.add("input-hide");
-            
-            
-                
-            
             //console.log(objTaskLocal);
             /*objTaskLocal.description = task_input_element.value;
             taskObject.is_checked = action_check.checked;
             console.log(taskObject);*/
             
-            //console.log("CONSOLE LOG TEST")
-            
-            console.log(objTaskLocal.TaskID);
-            console.log(objTaskLocal.lists);
-            console.log(JSON.stringify(objTaskLocal.lists));
-            console.log(objTaskLocal);
-            task_input_element.value = objTaskLocal.description; // I'm using objects attribute description to change input field for updated page
+            //console.log(objTaskLocal.TaskID);
+            //console.log(objTaskLocal.lists);
+            //console.log(JSON.stringify(objTaskLocal.lists));
+            //console.log(objTaskLocal);
+            task_input_element.value = objTaskLocal.description; 
             task_input_element.setAttribute("readonly", "readonly");
-    
             
             task_element.appendChild(task_content_element);
             task_content_element.appendChild(task_input_element);
+            task_element.setAttribute("id",objTaskLocal.TaskID);
             list_element.appendChild(task_element);
     
             const action_elements = document.createElement("div");
@@ -223,11 +178,11 @@ taskLists.addEventListener('change', (e) => {
             
             action_edit.addEventListener('click', () => {
                 //console.log("2");
-                console.log(objTaskLocal.description);
+                //console.log(objTaskLocal.description);
                 if(action_edit.innerText.toLowerCase() == "edit"){
                     action_edit.innerText = "save";
                     task_input_element.removeAttribute("readonly"); 
-                    localStorage.removeItem(objTaskLocal.description);
+                    localStorage.removeItem(objTaskLocal.TaskID);
                 }
                 else{
                     action_edit.innerText = "edit";
@@ -236,14 +191,14 @@ taskLists.addEventListener('change', (e) => {
                     objTaskLocal.description = task_input_element.value;
                     //console.log(task_input_element.value);
                     
-                    localStorage.setItem(objTaskLocal.description, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                     
                 }
             })
     
             action_delete.addEventListener('click', () => { 
             list_element.removeChild(task_element);
-            localStorage.removeItem(objTaskLocal.description);
+            localStorage.removeItem(objTaskLocal.TaskID);
                      })
             
             action_check.addEventListener('change', () =>{
@@ -252,7 +207,7 @@ taskLists.addEventListener('change', (e) => {
                     //console.log("1ST TEST");
                     objTaskLocal.is_checked = true;
                     task_input_element.classList.add("checked");
-                    localStorage.setItem(task_input_element.value, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.taskID, JSON.stringify(objTaskLocal));
                     
                 }
                 if(action_check.checked===false){
@@ -260,23 +215,22 @@ taskLists.addEventListener('change', (e) => {
                     objTaskLocal.is_checked = false;
     
                     task_input_element.classList.remove("checked");
-                    localStorage.setItem(task_input_element.value, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.taskID, JSON.stringify(objTaskLocal));
                 }
     
              })
-    
-             if(objTaskLocal.is_checked===true){
-                console.log("Checked on refresh" + objTaskLocal.id);
+
+             if(objTaskLocal.is_checked==true){ //Mora biti i ovaj i donji jer ovaj sluzi za kad se friski objekt napravi onda mu sejva za refresh
+                //console.log("If checked - on refresh console log this);
                 action_check.checked=true;
                 task_input_element.classList.add("checked");
             }
+    
         }
-        
-        
-        
 
         }
-    } else { /*////??*/}
+    }
+    SortTasksById();
 })
 
 
@@ -299,18 +253,12 @@ form.addEventListener('submit', (e) => {
     }
     else { 
 
-        //task_content_element.innerText = input.value;
-        /*task_element.appendChild(task_content_element);
-        list_element.appendChild(task_element); */
-
         const task_input_element = document.createElement("input")
         task_input_element.type = "text";
         task_input_element.classList.add("text");
         task_input_element.classList.add("input-hide");
         task_input_element.value = input.value;
         task_input_element.setAttribute("readonly", "readonly");
-
-        //task_content_element.appendChild(task_input_element);
         
         task_element.appendChild(task_content_element);
         task_content_element.appendChild(task_input_element);
@@ -329,11 +277,7 @@ form.addEventListener('submit', (e) => {
         action_elements.appendChild(action_edit);
         action_elements.appendChild(action_delete);
         task_element.appendChild(action_elements);
-
-
-
         input.value="";
-        
         
 
 
@@ -342,10 +286,7 @@ form.addEventListener('submit', (e) => {
         localStorage.removeItem(task_input_element.value);
                  })
 
-
-
         //Adding data to the local storage
-        //Since local storage can get 1key and 1value-string only, I'm going to make object into string -> JSON
         const taskObject = new Object();
         taskObject.description = task_input_element.value;
         taskObject.is_checked = action_check.checked;
@@ -356,28 +297,20 @@ form.addEventListener('submit', (e) => {
         taskObject.id = dateTime; 
         taskObject.BelongsTo = taskLists.value;
         
-        //console.log(taskObject); //JUST TO CHECK
+        //console.log(taskObject); //
         //console.log(JSON.stringify(taskObject));
         
         // I'm using value as input field value as
-        
         taskNamesArr.push(task_input_element.value);
-        console.log(informationObject);
+        //console.log(informationObject);
         //informationObject.lists = listNamesArr;
         informationObject.description = taskObject.description;
         informationObject.TaskID= taskObject.id;
         informationObject.is_checked = taskObject.is_checked;
         informationObject.BelongsTo = taskObject.BelongsTo;
-        //informationObject.ReturnTaskDescription() {
-        //    return taskObject.description
-        //}
-        console.log(informationObject); /// Radi objekt treba umjesto taskObjecta ga ubaciti i implementirati za sve
 
-        localStorage.setItem(informationObject.description, JSON.stringify(informationObject));
-        
-        
-        
-        
+        localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
+    
         action_edit.addEventListener('click', () => {
             
             if(action_edit.innerText.toLowerCase() == "edit"){
@@ -389,23 +322,22 @@ form.addEventListener('submit', (e) => {
                 action_edit.innerText = "edit";
                 task_input_element.setAttribute("readonly", "readonly");
                 taskObject.description = task_input_element.value;
-                localStorage.setItem(informationObject.description, JSON.stringify(informationObject));
+                localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
                 
             }
         })
-
 
         action_check.addEventListener('change', () =>{
 
             if(action_check.checked==true){
                 task_input_element.classList.add("checked");
                 taskObject.is_checked = "true";
-                localStorage.setItem(task_input_element.value, JSON.stringify(informationObject));
+                localStorage.setItem(taskObject.id, JSON.stringify(informationObject));
             }
             if(action_check.checked==false){
                 task_input_element.classList.remove("checked");
                 taskObject.is_checked = "false";
-                localStorage.setItem(task_input_element.value, JSON.stringify(informationObject));
+                localStorage.setItem(taskObject.id, JSON.stringify(informationObject));
             }
 
          })
@@ -413,10 +345,18 @@ form.addEventListener('submit', (e) => {
     })
     // Dio za prikaz lista koje su unutar local storage-a
     if(localStorage.length!=0){
-        let last_index=(localStorage.length-1); //Getting last element of an list (because last element - object contains all lists placed inside)
-        //console.log(last_index)
-        const key = localStorage.key(last_index);
-        const value = localStorage.getItem(key);
+
+        var max = localStorage.key(0);
+        console.log("Testna vrijednost" + max);
+        for(var i=0; i<localStorage.length; i++){
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            const last_object = JSON.parse(value);
+            if(max<key){
+                max=key;
+            }
+        }
+        const value = localStorage.getItem(max);
         const last_object = JSON.parse(value);
         //console.log(last_object.lists); Finally working
 
@@ -424,7 +364,7 @@ form.addEventListener('submit', (e) => {
         
         const select_element = document.createElement("option");
        
-        console.log(last_object.description);
+        //console.log(last_object.description);
         select_element.value = OptionValue;
         select_element.text = OptionValue;
         taskLists.appendChild(select_element);
@@ -446,15 +386,17 @@ form.addEventListener('submit', (e) => {
     //Dio za prikaz itema koji su stavljeni unutar local storage-a, ugl. for petlja i copy-pasteane f-je
     if(localStorage.length!=0){
         RemoveHidden();
-        for (let i=0; i<localStorage.length; i++){
-        
+        for (var i=0; i<localStorage.length; i++){
+
         const key = localStorage.key(i);
+        console.log(key);
         const value = localStorage.getItem(key);
-        console.log(value);
-        const objTaskLocal = JSON.parse(value); //Here I established object from whom I can get value of both checkbox and task-name
-        console.log(objTaskLocal)
-        console.log(taskLists.value);
-        console.log("Ovo je nes drugo"+objTaskLocal.BelongsTo);
+        //console.log(value);
+        const objTaskLocal = JSON.parse(value);
+        //console.log(objTaskLocal)
+        //console.log(taskLists.value);
+        //console.log("Belongs:"+objTaskLocal.BelongsTo);
+        console.log(objTaskLocal.description);
         if(taskLists.value==objTaskLocal.BelongsTo){
             const task_element = document.createElement("div");
             task_element.classList.add("task");
@@ -467,9 +409,7 @@ form.addEventListener('submit', (e) => {
             task_input_element.classList.add("text");
             task_input_element.classList.add("input-hide");
             
-            
-                
-            
+
             //console.log(objTaskLocal);
             /*objTaskLocal.description = task_input_element.value;
             taskObject.is_checked = action_check.checked;
@@ -477,18 +417,18 @@ form.addEventListener('submit', (e) => {
             
             //console.log("CONSOLE LOG TEST")
             
-            console.log(objTaskLocal.TaskID);
-            console.log(objTaskLocal.lists);
-            console.log(JSON.stringify(objTaskLocal.lists));
-            console.log(objTaskLocal);
+            //console.log(objTaskLocal.TaskID);
+            //console.log(objTaskLocal.lists);
+            //console.log(JSON.stringify(objTaskLocal.lists));
+            //console.log(objTaskLocal);
             task_input_element.value = objTaskLocal.description; // I'm using objects attribute description to change input field for updated page
             task_input_element.setAttribute("readonly", "readonly");
-    
             
             task_element.appendChild(task_content_element);
             task_content_element.appendChild(task_input_element);
+            task_element.setAttribute("id", objTaskLocal.TaskID)
             list_element.appendChild(task_element);
-    
+            
             const action_elements = document.createElement("div");
             action_elements.classList.add("actions");
             const action_edit = document.createElement("button");
@@ -502,14 +442,12 @@ form.addEventListener('submit', (e) => {
             action_elements.appendChild(action_edit);
             action_elements.appendChild(action_delete);
             task_element.appendChild(action_elements);
-            if(objTaskLocal.is_checked==="true"){ //Mora biti i ovaj i donji jer ovaj sluzi za kad se friski objekt napravi onda mu sejva za refresh
-                //console.log("If checked - on refresh console log this);
+            if(objTaskLocal.is_checked==="true"){
                 action_check.checked=true;
                 task_input_element.classList.add("checked");
             }
             
             action_edit.addEventListener('click', () => {
-                //console.log("2");
                 console.log(objTaskLocal.description);
                 if(action_edit.innerText.toLowerCase() == "edit"){
                     action_edit.innerText = "save";
@@ -523,7 +461,7 @@ form.addEventListener('submit', (e) => {
                     objTaskLocal.description = task_input_element.value;
                     //console.log(task_input_element.value);
                     
-                    localStorage.setItem(objTaskLocal.description, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                     
                 }
             })
@@ -539,7 +477,7 @@ form.addEventListener('submit', (e) => {
                     //console.log("1ST TEST");
                     objTaskLocal.is_checked = true;
                     task_input_element.classList.add("checked");
-                    localStorage.setItem(task_input_element.value, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                     
                 }
                 if(action_check.checked===false){
@@ -547,22 +485,20 @@ form.addEventListener('submit', (e) => {
                     objTaskLocal.is_checked = false;
     
                     task_input_element.classList.remove("checked");
-                    localStorage.setItem(task_input_element.value, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                 }
     
              })
     
              if(objTaskLocal.is_checked===true){
-                console.log("Checked on refresh" + objTaskLocal.id);
+                //console.log("Checked on refresh" + objTaskLocal.id);
                 action_check.checked=true;
                 task_input_element.classList.add("checked");
             }
         }
-        
-        
-        
-
         }
     }
+
+SortTasksById();
 
 })
