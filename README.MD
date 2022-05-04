@@ -34,7 +34,7 @@ HTML, CSS, JS
 
 
 * Local storage data
-   * Data is saved inside a local storage for normal user experience.
+   * Data is saved inside a local storage for a normal user experience.
    * 
 <p align="center">
   <img src="https://i.imgur.com/dXPExxQ.jpg" />
