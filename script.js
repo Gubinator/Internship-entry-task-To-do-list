@@ -207,7 +207,7 @@ taskLists.addEventListener('change', (e) => {
                     //console.log("1ST TEST");
                     objTaskLocal.is_checked = true;
                     task_input_element.classList.add("checked");
-                    localStorage.setItem(objTaskLocal.taskID, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                     
                 }
                 if(action_check.checked===false){
@@ -215,7 +215,7 @@ taskLists.addEventListener('change', (e) => {
                     objTaskLocal.is_checked = false;
     
                     task_input_element.classList.remove("checked");
-                    localStorage.setItem(objTaskLocal.taskID, JSON.stringify(objTaskLocal));
+                    localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                 }
     
              })
@@ -280,12 +280,6 @@ form.addEventListener('submit', (e) => {
         input.value="";
         
 
-
-        action_delete.addEventListener('click', () => { 
-        list_element.removeChild(task_element);
-        localStorage.removeItem(task_input_element.value);
-                 })
-
         //Adding data to the local storage
         const taskObject = new Object();
         taskObject.description = task_input_element.value;
@@ -311,35 +305,38 @@ form.addEventListener('submit', (e) => {
 
         localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
     
+        action_delete.addEventListener('click', () => { 
+            list_element.removeChild(task_element);
+            localStorage.removeItem(informationObject.TaskID);
+                     })
+        
         action_edit.addEventListener('click', () => {
             
             if(action_edit.innerText.toLowerCase() == "edit"){
                 action_edit.innerText = "save";
                 task_input_element.removeAttribute("readonly"); 
-                localStorage.removeItem(informationObject.description);
+                localStorage.removeItem(informationObject.TaskID);
             }
             else{
                 action_edit.innerText = "edit";
                 task_input_element.setAttribute("readonly", "readonly");
                 taskObject.description = task_input_element.value;
                 localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
-                
             }
         })
 
         action_check.addEventListener('change', () =>{
 
-            if(action_check.checked==true){
+            if(action_check.checked===true){
                 task_input_element.classList.add("checked");
-                taskObject.is_checked = "true";
-                localStorage.setItem(taskObject.id, JSON.stringify(informationObject));
+                informationObject.is_checked = true;
+                localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
             }
-            if(action_check.checked==false){
+            if(action_check.checked===false){
                 task_input_element.classList.remove("checked");
-                taskObject.is_checked = "false";
-                localStorage.setItem(taskObject.id, JSON.stringify(informationObject));
+                informationObject.is_checked = false;
+                localStorage.setItem(informationObject.TaskID, JSON.stringify(informationObject));
             }
-
          })
         }
     })
@@ -452,7 +449,7 @@ form.addEventListener('submit', (e) => {
                 if(action_edit.innerText.toLowerCase() == "edit"){
                     action_edit.innerText = "save";
                     task_input_element.removeAttribute("readonly"); 
-                    localStorage.removeItem(objTaskLocal.description);
+                    localStorage.removeItem(objTaskLocal.TaskID);
                 }
                 else{
                     action_edit.innerText = "edit";
@@ -468,14 +465,16 @@ form.addEventListener('submit', (e) => {
     
             action_delete.addEventListener('click', () => { 
             list_element.removeChild(task_element);
-            localStorage.removeItem(objTaskLocal.description);
+            localStorage.removeItem(objTaskLocal.TaskID);
                      })
             
             action_check.addEventListener('change', () =>{
                 
                 if(action_check.checked===true){
-                    //console.log("1ST TEST");
+                    
                     objTaskLocal.is_checked = true;
+                    console.log("1ST TEST jel check");
+                    console.log(objTaskLocal.is_checked);
                     task_input_element.classList.add("checked");
                     localStorage.setItem(objTaskLocal.TaskID, JSON.stringify(objTaskLocal));
                     
