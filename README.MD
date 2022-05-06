@@ -76,5 +76,5 @@ Inspiration, things that helped me create this project, etc..
 * [dcode - how local storage funtions](https://www.youtube.com/watch?v=k8yJCeuP6I8&ab_channel=dcode)
 * [Web Dev Simplifed - idea I guess, maybe?](https://www.youtube.com/watch?v=W7FaYfuwu70&t=2111s&ab_channel=WebDevSimplified)
 * [W3Schools - CSS, HTML, JSS pretty much everything](https://www.w3schools.com/)
-* [etc..](https://www.youtube.com/watch?v=_WH6cbwZ5m8&ab_channel=Jombo)
+
 
